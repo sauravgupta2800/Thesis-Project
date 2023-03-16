@@ -6,10 +6,25 @@ const Comparator = () => {
   const [totalResponseTimeTaken, setResponsetime] = useState([]);
 
   async function onLoad() {
-    const owner = "facebook";
-    const repo = "react";
+    const data = {
+      react: {
+        owner: "facebook",
+        repo: "react",
+      },
+      vue: {
+        owner: "vuejs",
+        repo: "vue",
+      },
+      angular: {
+        owner: "angular",
+        repo: "angular",
+      },
+    };
+    const type = "react";
+    const { owner, repo } = data[type];
+
     const { data: issues } = await octokit.request(
-      "GET /repos/{owner}/{repo}/issues?per_page=1",
+      "GET /repos/{owner}/{repo}/issues?per_page=100",
       { owner, repo }
     );
 
@@ -58,7 +73,7 @@ const Comparator = () => {
   }
 
   const getFirstCollabortorResponseTime = (comments) => {
-    const associations = ["COLLABORATOR"];
+    const associations = ["COLLABORATOR", "MEMBER"];
     let collaboratorComment = comments.find(({ author_association }) =>
       associations.includes(author_association)
     );
