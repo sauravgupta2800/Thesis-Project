@@ -31,6 +31,7 @@ const Comparator = () => {
     let totalResponseTimeTaken = 0;
 
     console.log("issues: ", issues);
+    let totalIssuesWithComment = 0;
 
     issues.forEach(async (issue, index) => {
       const { data: comments } = await octokit.request(
@@ -48,6 +49,8 @@ const Comparator = () => {
       const issueCreatedAt = new Date(issue.created_at);
       //console.log(issueCreatedAt);
       if (comments.length) {
+        totalIssuesWithComment++;
+
         let firstCommentDate = getFirstCollabortorResponseTime(comments);
         if (firstCommentDate) {
           firstCommentDate = new Date(firstCommentDate);
@@ -65,7 +68,7 @@ const Comparator = () => {
       console.log("comments: ", comments);
 
       if (index === issues.length - 1) {
-        setResponsetime(totalResponseTimeTaken);
+        setResponsetime(totalResponseTimeTaken / totalIssuesWithComment);
       }
     });
 
