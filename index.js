@@ -1,9 +1,7 @@
 const { Octokit } = require("@octokit/rest");
 const { appendFileSync, readdirSync, existsSync } = require("fs");
 const octokit = new Octokit({
-  auth: "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",
-  //auth: process.env.REACT_APP_GH,
-  //   userAgent: "skylight v1",
+  auth: process.env.REACT_APP_GH,
 });
 
 const dataMap = {};
