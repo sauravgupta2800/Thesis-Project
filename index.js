@@ -1,5 +1,5 @@
 const { Octokit } = require("@octokit/rest");
-const { appendFileSync, readdirSync, existsSync } = require("fs");
+const { appendFileSync, existsSync } = require("fs");
 const octokit = new Octokit({
   auth: process.env.REACT_APP_GH,
 });
@@ -118,9 +118,6 @@ async function getPRTime(issue_number) {
 
 function makeCSV() {
   console.log("Done");
-  function isEmpty(path) {
-    return !existsSync(path) || readdirSync(path).length === 0;
-  }
 
   if (!existsSync(`./${type}.csv`)) {
     try {
